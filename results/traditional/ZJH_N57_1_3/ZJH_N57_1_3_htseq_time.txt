@@ -1,0 +1,23 @@
+	Command being timed: "htseq-count /home/david/projects/benchmark_biogpu/results/traditional/ZJH_N57_1_3/ZJH_N57_1_3.sam /home/david/projects/benchmark_biogpu/databases/traditional/amr_stress_genes.gff3 -f sam -a 1 --idattr ID --type gene -s no --additional-attr=Name"
+	User time (seconds): 11.00
+	System time (seconds): 0.06
+	Percent of CPU this job got: 3120%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.35
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 79680
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 18079
+	Voluntary context switches: 159
+	Involuntary context switches: 108
+	Swaps: 0
+	File system inputs: 25315
+	File system outputs: 2603
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

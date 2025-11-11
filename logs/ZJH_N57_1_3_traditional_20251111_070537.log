@@ -1,0 +1,9 @@
+[2025-11-11 07:05:37] =========================================
+[2025-11-11 07:05:37] Traditional Pipeline: ZJH_N57_1_3
+[2025-11-11 07:05:37] =========================================
+[2025-11-11 07:05:37] R1: /bulkpool/sequence_data/mss_data/ZJH_N57_1_3_R1.fastq.gz
+[2025-11-11 07:05:37] R2: /bulkpool/sequence_data/mss_data/ZJH_N57_1_3_R2.fastq.gz
+[2025-11-11 07:05:37] Output: /home/david/projects/benchmark_biogpu/results/traditional/ZJH_N57_1_3
+[2025-11-11 07:05:37] Threads: 32
+[2025-11-11 07:05:37] 
+[2025-11-11 07:05:37] Step 1: Running bowtie2 alignment...

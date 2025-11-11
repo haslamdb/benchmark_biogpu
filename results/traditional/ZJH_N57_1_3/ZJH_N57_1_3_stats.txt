@@ -1,0 +1,49 @@
+Sample: ZJH_N57_1_3
+Date: Tue Nov 11 07:12:37 AM EST 2025
+
+Alignment Statistics:
+  Total read pairs: 12497356
+  Aligned pairs: 252
+  Alignment rate: 0.00%
+
+Gene Detection:
+  Genes with reads: 14280
+
+Performance Metrics (Traditional Pipeline):
+  Total pipeline time: 50s (0.83m)
+
+  Step-by-step timing (wall clock time):
+    1. Bowtie2 alignment:    49s (98.0%)
+    2. SAM/BAM processing:   0s (0.0%)
+    3. htseq-count:          1s (2.0%)
+    4. bedtools coverage:    0s (0.0%)
+    5. RPM/TPM calculation:  0s (0.0%)
+
+  CPU time (user):
+    - Bowtie2:     1646.92s
+    - samtools:    0.09s
+    - htseq-count: 11.00s
+    - bedtools:    0.02s
+
+  Peak memory usage:
+    - Bowtie2:     358192 KB (0.34GB)
+    - samtools:    12288 KB (0.01GB)
+    - htseq-count: 79680 KB (0.08GB)
+    - bedtools:    13136 KB (0.01GB)
+
+  Threads used: 32
+
+Files Created:
+  - ZJH_N57_1_3_counts.tsv         # Raw htseq-count output
+  - ZJH_N57_1_3_abundance.tsv      # Combined metrics (counts, RPM, TPM, coverage)
+  - ZJH_N57_1_3_coverage.bed       # Detailed bedtools coverage
+  - ZJH_N57_1_3_stats.txt          # This file
+  - ZJH_N57_1_3_timing.tsv         # Machine-readable timing data
+  - ZJH_N57_1_3_*_time.txt         # Detailed /usr/bin/time output per step
+
+Normalization:
+  RPM: TODO - Verify if using pairs or reads as denominator!
+  TPM: Standard formula (normalized by gene length and library size)
+  Coverage: Fraction of gene bases covered by at least 1 read
+
+Pipeline: bowtie2 -> htseq-count -> bedtools -> RPM/TPM calculation

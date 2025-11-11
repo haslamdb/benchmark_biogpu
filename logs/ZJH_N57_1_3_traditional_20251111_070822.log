@@ -1,0 +1,56 @@
+[2025-11-11 07:08:22] =========================================
+[2025-11-11 07:08:22] Traditional Pipeline: ZJH_N57_1_3
+[2025-11-11 07:08:22] =========================================
+[2025-11-11 07:08:22] R1: /bulkpool/sequence_data/mss_data/ZJH_N57_1_3_R1.fastq.gz
+[2025-11-11 07:08:22] R2: /bulkpool/sequence_data/mss_data/ZJH_N57_1_3_R2.fastq.gz
+[2025-11-11 07:08:22] Output: /home/david/projects/benchmark_biogpu/results/traditional/ZJH_N57_1_3
+[2025-11-11 07:08:22] Threads: 32
+[2025-11-11 07:08:22] 
+[2025-11-11 07:08:22] Step 1: Running bowtie2 alignment...
+[2025-11-11 07:09:08] ✓ Bowtie2 completed
+[2025-11-11 07:09:08]   Wall time: 46s
+[2025-11-11 07:09:08]   CPU time: 1535.16s user + 9.79s system
+[2025-11-11 07:09:08]   Max memory: 356176 KB
+[2025-11-11 07:09:08]   Total pairs: 12497356
+[2025-11-11 07:09:08]   Aligned pairs: 252
+[2025-11-11 07:09:08] 
+[2025-11-11 07:09:08] Step 2: Converting SAM to sorted BAM...
+[2025-11-11 07:09:08] ✓ BAM file created and sorted
+[2025-11-11 07:09:08]   Wall time: 0s
+[2025-11-11 07:09:08]   CPU time: 0.10s
+[2025-11-11 07:09:08]   Max memory: 11224 KB
+[2025-11-11 07:09:08] 
+[2025-11-11 07:09:08] Step 3: Running htseq-count...
+[2025-11-11 07:09:09] ✓ htseq-count completed: 14267 genes with reads
+[2025-11-11 07:09:09]   Wall time: 1s
+[2025-11-11 07:09:09]   CPU time: 10.89s
+[2025-11-11 07:09:09]   Max memory: 76588 KB
+[2025-11-11 07:09:09] 
+[2025-11-11 07:09:09] Step 4: Calculating gene coverage with bedtools...
+[2025-11-11 07:09:09] ✓ Coverage calculation completed
+[2025-11-11 07:09:09]   Wall time: 0s
+[2025-11-11 07:09:09]   CPU time: 0.03s
+[2025-11-11 07:09:09]   Max memory: 15180 KB
+[2025-11-11 07:09:09] 
+[2025-11-11 07:09:09] Step 5: Calculating RPM, TPM, and combining metrics...
+[2025-11-11 07:09:09] ✓ Combined abundance table created
+[2025-11-11 07:09:09]   Output: ZJH_N57_1_3_abundance.tsv
+[2025-11-11 07:09:09]   Columns: gene_id, gene_name, read_count, rpm, tpm, mean_depth, percent_coverage, gene_length
+[2025-11-11 07:09:09]   Wall time: 0s
+[2025-11-11 07:09:09] 
+[2025-11-11 07:09:09] Step 6: Creating summary statistics with timing...
+[2025-11-11 07:09:09] ✓ Summary statistics created with timing metrics
+[2025-11-11 07:09:09]   - ZJH_N57_1_3_stats.txt (human-readable)
+[2025-11-11 07:09:09]   - ZJH_N57_1_3_timing.tsv (machine-readable)
+[2025-11-11 07:09:09] 
+[2025-11-11 07:09:09] Step 7: Cleanup...
+[2025-11-11 07:09:09] ✓ Removed SAM file
+[2025-11-11 07:09:09] ✓ Removed BAM files
+[2025-11-11 07:09:09] 
+[2025-11-11 07:09:09] =========================================
+[2025-11-11 07:09:09] Sample ZJH_N57_1_3 completed successfully
+[2025-11-11 07:09:09] =========================================
+[2025-11-11 07:09:09] Output directory: /home/david/projects/benchmark_biogpu/results/traditional/ZJH_N57_1_3
+[2025-11-11 07:09:09] Main output: ZJH_N57_1_3_abundance.tsv
+[2025-11-11 07:09:09] Log file: /home/david/projects/benchmark_biogpu/logs/ZJH_N57_1_3_traditional_20251111_070822.log
+[2025-11-11 07:09:09] 

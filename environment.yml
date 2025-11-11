@@ -1,0 +1,37 @@
+name: benchmark_biogpu
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  # Alignment tools
+  - bwa >=0.7.17
+  - bowtie2 >=2.4.5
+  - samtools >=1.15
+
+  # Feature counting
+  - subread >=2.0.3  # Provides featureCounts
+  - htseq  # Provides htseq-count
+  - bedtools >=2.30
+
+  # Python and analysis
+  - python >=3.9
+  - pandas >=1.5
+  - numpy >=1.23
+  - scipy >=1.9
+  - matplotlib >=3.5
+  - seaborn >=0.12
+  - biopython >=1.79
+
+  # Utilities
+  - pigz  # Parallel gzip
+  - parallel  # GNU parallel for batch processing
+
+  # Jupyter for analysis notebooks
+  - jupyter
+  - jupyterlab
+
+  # pip packages
+  - pip
+  - pysam >=0.19  # Moved from pip to conda to avoid compilation issues

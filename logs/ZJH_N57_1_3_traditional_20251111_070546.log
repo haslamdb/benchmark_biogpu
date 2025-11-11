@@ -1,0 +1,35 @@
+[2025-11-11 07:05:46] =========================================
+[2025-11-11 07:05:46] Traditional Pipeline: ZJH_N57_1_3
+[2025-11-11 07:05:46] =========================================
+[2025-11-11 07:05:46] R1: /bulkpool/sequence_data/mss_data/ZJH_N57_1_3_R1.fastq.gz
+[2025-11-11 07:05:46] R2: /bulkpool/sequence_data/mss_data/ZJH_N57_1_3_R2.fastq.gz
+[2025-11-11 07:05:46] Output: /home/david/projects/benchmark_biogpu/results/traditional/ZJH_N57_1_3
+[2025-11-11 07:05:46] Threads: 32
+[2025-11-11 07:05:46] 
+[2025-11-11 07:05:46] Step 1: Running bowtie2 alignment...
+[2025-11-11 07:06:32] ✓ Bowtie2 completed
+[2025-11-11 07:06:32]   Wall time: 46s
+[2025-11-11 07:06:32]   CPU time: 1528.59s user + 10.61s system
+[2025-11-11 07:06:32]   Max memory: 352084 KB
+[2025-11-11 07:06:32]   Total pairs: 12497356
+[2025-11-11 07:06:32]   Aligned pairs: 252
+[2025-11-11 07:06:32] 
+[2025-11-11 07:06:32] Step 2: Converting SAM to sorted BAM...
+[2025-11-11 07:06:32] ✓ BAM file created and sorted
+[2025-11-11 07:06:32]   Wall time: 0s
+[2025-11-11 07:06:32]   CPU time: 0.09s
+[2025-11-11 07:06:32]   Max memory: 12288 KB
+[2025-11-11 07:06:32] 
+[2025-11-11 07:06:32] Step 3: Running htseq-count...
+[2025-11-11 07:06:33] ✓ htseq-count completed: 14267 genes with reads
+[2025-11-11 07:06:33]   Wall time: 1s
+[2025-11-11 07:06:33]   CPU time: 10.91s
+[2025-11-11 07:06:33]   Max memory: 78656 KB
+[2025-11-11 07:06:33] 
+[2025-11-11 07:06:33] Step 4: Calculating gene coverage with bedtools...
+[2025-11-11 07:06:33] ✓ Coverage calculation completed
+[2025-11-11 07:06:33]   Wall time: 0s
+[2025-11-11 07:06:33]   CPU time: 0.03s
+[2025-11-11 07:06:33]   Max memory: 14156 KB
+[2025-11-11 07:06:33] 
+[2025-11-11 07:06:33] Step 5: Calculating RPM, TPM, and combining metrics...

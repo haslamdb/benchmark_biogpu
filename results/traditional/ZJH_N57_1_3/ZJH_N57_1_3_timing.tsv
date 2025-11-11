@@ -1,0 +1,7 @@
+sample_name	step	wall_time_sec	cpu_time_sec	memory_kb	memory_gb	threads	percent_of_total
+ZJH_N57_1_3	bowtie2	49	1646.92	358192	0.342	32	98.00
+ZJH_N57_1_3	samtools	0	0.09	12288	0.012	32	0.00
+ZJH_N57_1_3	htseq-count	1	11.00	79680	0.076	1	2.00
+ZJH_N57_1_3	bedtools	0	0.02	13136	0.013	1	0.00
+ZJH_N57_1_3	python	0	NA	NA	NA	1	0.00
+ZJH_N57_1_3	TOTAL	50	NA	NA	NA	32	100.00
