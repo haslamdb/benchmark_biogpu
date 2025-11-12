@@ -23,20 +23,27 @@
   - `/fastpool/analysis/nicu_amr_stress/amr_stress/`
   - `/fastpool/analysis/nicu_amr_stress/resistance/`
 - ✓ Found user's existing bowtie2 pipeline scripts (use bowtie2 + htseq-count)
+- ✓ **Switched to DIAMOND as primary method** (translated search matching biogpu)
 - ✓ **Created database setup script**: `scripts/01_setup_databases.sh`
   - Links biogpu databases
-  - Copies DNA FASTA for traditional pipeline
+  - Copies protein FASTA for DIAMOND pipeline
+  - Builds DIAMOND index (.dmnd file)
+  - Copies DNA FASTA for bowtie2 (optional)
   - Creates GFF3 annotation file from FASTA headers
-  - Builds bowtie2 index
+  - Builds bowtie2 index (optional)
 - ✓ **Created GFF3 generator**: `scripts/create_gff3_from_fasta.py`
   - Parses biogpu FASTA headers
   - Creates htseq-count compatible GFF3
-- ✓ **Created traditional pipeline with timing**: `scripts/02_run_traditional_pipeline.sh`
-  - Runs bowtie2 → htseq-count → bedtools pipeline
+- ✓ **Created DIAMOND pipeline with timing**: `scripts/02_run_diamond_pipeline.sh`
+  - Runs DIAMOND blastx (translated search)
+  - Parameters: 85% identity, 50% coverage (matching biogpu)
   - Outputs read counts, RPM, TPM, coverage %
   - Captures comprehensive timing metrics (wall time, CPU time, memory)
+- ✓ **Created traditional bowtie2 pipeline**: `scripts/02_run_traditional_pipeline.sh`
+  - Runs bowtie2 → htseq-count → bedtools pipeline
+  - Retained as optional alternative for nucleotide-space comparison
 - ✓ **Created batch processing script**: `scripts/03_batch_traditional_pipeline.sh`
-  - Process multiple samples from CSV file
+  - Process multiple samples from CSV file (runs DIAMOND pipeline)
   - Progress tracking and error handling
 - ✓ **Created biogpu timing script**: `scripts/04_run_biogpu_with_timing.sh`
   - Re-runs biogpu pipeline with timing instrumentation
@@ -49,67 +56,72 @@
 
 ## Next Steps
 
-1. **Run database setup** (ready to execute):
+1. **Run DIAMOND pipeline** (~3-4 hours):
    ```bash
    conda activate benchmark_biogpu
    cd /home/david/projects/benchmark_biogpu
-   ./scripts/01_setup_databases.sh
+   ./scripts/03_batch_traditional_pipeline.sh
    ```
 
-2. **Select test samples**:
-   - Create sample list (10-20 samples)
-   - Stratified by body site, location, timepoint
-   - Use samples with varying AMR burden
+2. **Run biogpu pipeline with timing** (~4-8 hours):
+   ```bash
+   ./scripts/05_batch_biogpu_with_timing.sh --gpu-id 0
+   ```
 
-3. **Create traditional pipeline script**:
-   - Adapt user's bowtie2 + htseq-count workflow
-   - Process selected test samples
-   - Output gene counts
+3. **Aggregate results**:
+   - Combine timing data from all samples
+   - Collect abundance data for comparison
 
 4. **Create comparison script**:
-   - Compare biogpu vs traditional results
-   - Correlation analysis
-   - Venn diagrams
-   - Discrepancy investigation
+   - Compare biogpu vs DIAMOND results
+   - Correlation analysis (Spearman, Pearson)
+   - Venn diagrams (gene detection overlap)
+   - Performance metrics (speedup, memory usage)
 
-5. **Run benchmark and generate report**
+5. **Generate figures and report** for reviewer response
 
 ## Critical Considerations
 
-### Fair Comparison Challenges
+### Fair Comparison Strategy
 
-The biogpu and traditional methods are fundamentally different:
+**Key Decision**: Switch from bowtie2 to DIAMOND for fair comparison
 
-| Aspect | BioGPU | Traditional |
-|--------|--------|-------------|
-| Search space | Protein (6-frame translation) | Nucleotide |
-| Sensitivity | Higher for divergent sequences | Limited to close matches |
-| Speed | GPU-accelerated | CPU-based |
-| Min identity | 85% (protein space) | ~95% typical (nucleotide) |
-| Coverage | 50% minimum | Varies |
+| Aspect | BioGPU | DIAMOND (Primary) | Bowtie2 (Optional) |
+|--------|--------|-------------------|-------------------|
+| Search space | Protein (6-frame) | Protein (6-frame) | Nucleotide |
+| Sensitivity | High (divergent genes) | High (divergent genes) | Lower (close matches) |
+| Speed | GPU-accelerated | CPU-based | CPU-based |
+| Min identity | 85% (protein) | 85% (protein) | ~95% typical (DNA) |
+| Coverage | 50% minimum | 50% minimum | Varies |
 
-**Implications**:
-- BioGPU may detect genes that traditional misses (especially divergent ones)
-- This is a **feature**, not a bug, for resistance gene detection
-- Fair comparison requires acknowledging different use cases
+**Why DIAMOND?**
+- Both methods now search in protein space with identical parameters
+- Fair, apples-to-apples comparison
+- Can both detect divergent resistance genes
+- Differences will reflect implementation, not fundamental methodology
+
+**Bowtie2 retained as optional alternative**:
+- Shows sensitivity difference between nucleotide and protein-space search
+- Demonstrates why translated search is important for AMR detection
 
 ### What We're Actually Testing
 
-1. **Agreement for high-identity matches**: Do both methods agree on abundant, conserved genes?
-2. **Sensitivity gain**: How many additional genes does translated search detect?
-3. **False positive rate**: Are biogpu-specific detections real or spurious?
-4. **Quantification accuracy**: For genes detected by both, do abundances correlate?
+1. **Method agreement**: Do biogpu and DIAMOND (both translated search) detect similar genes?
+2. **Quantification correlation**: For shared genes, do RPM values correlate (target: r > 0.90)?
+3. **Performance comparison**: GPU vs CPU for translated search - speedup and memory usage
+4. **Implementation validation**: Are there systematic differences despite same methodology?
 
 ### Validation Strategy
 
-For genes detected only by biogpu:
-- Check alignment quality (identity %, coverage %)
-- Blast against NCBI to verify sequence identity
-- Check if they're divergent homologs (expected)
+Since both methods now use translated search with same parameters, discrepancies indicate:
+- Implementation differences (algorithmic choices)
+- Edge cases in alignment or counting
+- Potential bugs or issues to investigate
 
-For genes detected only by traditional:
-- Check if they fail biogpu thresholds (50% coverage, 85% identity)
-- Verify they're real hits (not mapping artifacts)
+For genes with different abundances:
+- Check alignment quality metrics
+- Verify read counting logic
+- Check for edge cases (gene boundaries, multi-mapping)
 
 ## Deliverables for Reviewer Response
 
@@ -126,20 +138,33 @@ For genes detected only by traditional:
 
 ```
 /home/david/projects/benchmark_biogpu/
-├── README.md                    ✓ Created
-├── environment.yml              ✓ Created
+├── README.md                                  ✓ Updated (DIAMOND)
+├── QUICKSTART.md                              ✓ Updated (DIAMOND)
+├── RUN_BENCHMARK.md                           ✓ Updated (DIAMOND)
+├── IMPORTANT_NOTES.md                         ✓ Updated (DIAMOND)
+├── environment.yml                            ✓ Created
 ├── docs/
-│   ├── SETUP_GUIDE.md          ✓ Created
-│   └── PROJECT_STATUS.md       ✓ Created
-├── scripts/                     [Empty - awaiting user script]
-├── data/                        [Empty - will populate with test samples]
+│   ├── SETUP_GUIDE.md                        ✓ Updated (DIAMOND)
+│   ├── PROJECT_STATUS.md                     ✓ Updated (DIAMOND)
+│   ├── TIMING_METRICS.md                     ✓ Created
+│   └── RPM_NORMALIZATION.md                  ✓ Created
+├── scripts/
+│   ├── 01_setup_databases.sh                 ✓ Created (DIAMOND + bowtie2)
+│   ├── 02_run_diamond_pipeline.sh            ✓ Created (PRIMARY METHOD)
+│   ├── 02_run_traditional_pipeline.sh        ✓ Created (bowtie2 - optional)
+│   ├── 03_batch_traditional_pipeline.sh      ✓ Created (runs DIAMOND)
+│   ├── 04_run_biogpu_with_timing.sh          ✓ Created
+│   ├── 05_batch_biogpu_with_timing.sh        ✓ Created
+│   └── create_gff3_from_fasta.py             ✓ Created
+├── data/
+│   └── test_samples.csv                      ✓ Created (50 samples)
 ├── results/
-│   ├── biogpu/                  [Ready to link]
-│   └── traditional/             [Ready for pipeline output]
-├── logs/                        [Empty - for pipeline logs]
+│   ├── biogpu/                               [Ready for results]
+│   └── traditional/                          [Ready for DIAMOND results]
+├── logs/                                      [Ready for logs]
 └── databases/
-    ├── biogpu/                  [Ready to link]
-    └── traditional/             [Ready for indexing]
+    ├── biogpu/                               [Ready to link]
+    └── traditional/                          [Ready for DIAMOND + bowtie2]
 ```
 
 ## References

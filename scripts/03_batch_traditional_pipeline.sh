@@ -52,8 +52,8 @@ while IFS=, read -r sample_name r1_path r2_path; do
     log "Processing sample ${CURRENT}/${TOTAL_SAMPLES}: ${sample_name}"
     log "========================================="
 
-    # Run traditional pipeline
-    if "${BENCHMARK_DIR}/scripts/02_run_traditional_pipeline.sh" \
+    # Run DIAMOND pipeline
+    if "${BENCHMARK_DIR}/scripts/02_run_diamond_pipeline.sh" \
         --sample "${sample_name}" \
         --r1 "${r1_path}" \
         --r2 "${r2_path}" \

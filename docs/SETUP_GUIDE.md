@@ -42,28 +42,33 @@ ln -s /home/david/projects/biogpu/data/amr_stress_combined_db ./amr_stress_combi
 ln -s /home/david/projects/biogpu/data/integrated_clean_db ./integrated_clean_db
 ```
 
-### Traditional Pipeline Databases (need to create)
+### Traditional Pipeline Databases
 
-We'll use the same reference sequences but in nucleotide format for bwa-mem/bowtie2:
+**Primary Method: DIAMOND** (matching biogpu's translated search):
 
 ```bash
 cd databases/traditional
 
-# Copy protein sequences (will need to extract DNA sequences from biogpu DBs)
-# These are FASTA files that need indexing
+# Copy protein sequences for DIAMOND
+cp /home/david/projects/biogpu/data/amr_stress_combined_db/protein.fasta amr_stress_protein.fasta
 
-# For AMR + Stress genes
-# Extract DNA sequences from: biogpu/data/amr_stress_combined_db/dna.fasta
-cp /home/david/projects/biogpu/data/amr_stress_combined_db/dna.fasta amr_stress_dna.fasta
-
-# Build BWA index
-bwa index amr_stress_dna.fasta
-
-# Build Bowtie2 index (optional - for comparison)
-bowtie2-build amr_stress_dna.fasta amr_stress_dna
+# Build DIAMOND index
+diamond makedb --in amr_stress_protein.fasta --db amr_stress_protein
+# Creates: amr_stress_protein.dmnd
 ```
 
-**Note**: The biogpu pipeline uses translated search (protein space), so it can detect divergent sequences. Traditional nucleotide alignment may be less sensitive for divergent genes.
+**Alternative Method: Bowtie2** (nucleotide alignment - optional):
+
+```bash
+# Copy DNA sequences for bowtie2
+cp /home/david/projects/biogpu/data/amr_stress_combined_db/dna.fasta amr_stress_dna.fasta
+
+# Build Bowtie2 index
+bowtie2-build amr_stress_dna.fasta amr_stress_bt2
+# Creates: amr_stress_bt2.*.bt2 files
+```
+
+**Note**: We now use DIAMOND blastx as the primary method because it uses translated search (protein space) just like biogpu, enabling fair comparison. Bowtie2 (nucleotide alignment) is retained as an optional alternative but is less sensitive for divergent genes.
 
 ## Step 4: Extract BioGPU Results for Test Samples
 
@@ -93,16 +98,31 @@ cat /home/david/projects/biogpu/nicu_sample_key_fixed.csv
 
 This CSV has columns: `sample_name,fastq_path,r1_file,r2_file`
 
-## Step 6: Run Traditional Pipeline
+## Step 6: Run DIAMOND Pipeline (Primary Method)
 
-Script to create: `scripts/run_traditional_pipeline.sh`
+Script: `scripts/02_run_diamond_pipeline.sh` (already created)
 
 Pipeline steps:
-1. Align reads to reference with bwa-mem (or bowtie2)
+1. Run DIAMOND blastx on R1 and R2 separately (translated search)
+2. Combine results and count reads per gene
+3. Calculate abundance metrics (read count, RPM, TPM, coverage %)
+4. Capture comprehensive timing data
+
+Parameters:
+- Identity: 85% (matching biogpu)
+- Query coverage: 50% (matching biogpu)
+- Mode: --sensitive
+
+## Step 6b: Run Bowtie2 Pipeline (Optional Alternative)
+
+Script: `scripts/02_run_traditional_pipeline.sh` (legacy method)
+
+Pipeline steps:
+1. Align reads to reference with bowtie2 (nucleotide alignment)
 2. Convert SAM to BAM, sort, index
-3. Count reads per gene with featureCounts
-4. Normalize to RPM
-5. Compare to biogpu results
+3. Count reads per gene with htseq-count
+4. Calculate coverage with bedtools
+5. Normalize to RPM and TPM
 
 ## Step 7: Analysis and Comparison
 
@@ -134,19 +154,24 @@ Analyses:
 
 ## Expected Challenges
 
-1. **Different search spaces**: BioGPU uses protein space (6-frame translation), traditional uses nucleotide space
-   - BioGPU may detect more divergent sequences
-   - Fair comparison requires understanding this fundamental difference
+1. **Search space matching** (SOLVED):
+   - **Problem**: BioGPU uses protein space (6-frame translation), bowtie2 uses nucleotide space
+   - **Solution**: Use DIAMOND blastx (translated search) with same parameters as biogpu
+   - Now both methods search in protein space with 85% identity and 50% coverage
 
-2. **Gene length normalization**: featureCounts normalizes differently than biogpu
-   - Need to ensure comparable RPM calculations
+2. **Gene length normalization**:
+   - Both DIAMOND and biogpu calculate RPM and TPM
+   - Need to verify RPM denominator (reads vs read pairs)
 
-3. **Multi-mapping reads**: How each method handles reads mapping to multiple genes
-   - BioGPU: best hit strategy
-   - featureCounts: various options (unique, multi-overlap)
+3. **Multi-mapping reads**: Both methods use similar strategies
+   - BioGPU: best hit per read
+   - DIAMOND: top 1 hit per read (default)
+   - Should produce comparable results
 
-4. **Coverage thresholds**: BioGPU uses 50% coverage minimum
-   - May need to apply similar filter to traditional results
+4. **Performance comparison**:
+   - DIAMOND: CPU-based translated search (~4-5 min/sample)
+   - BioGPU: GPU-accelerated translated search (~5-10 min/sample)
+   - Capture comprehensive timing for both
 
 ## Success Criteria
 

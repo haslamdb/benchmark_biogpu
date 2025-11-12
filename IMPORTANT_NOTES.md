@@ -81,14 +81,19 @@ See `docs/TIMING_METRICS.md` for full documentation.
 
 ### 1. Coverage Thresholds
 **BioGPU**:
-- Min identity: 85%
+- Min identity: 85% (protein space)
 - Min coverage: 50%
 
-**Traditional Pipeline**:
-- bowtie2: default settings (~95% identity typical)
+**DIAMOND Pipeline** (Primary - matching biogpu):
+- Min identity: 85% (protein space)
+- Min coverage: 50% (query coverage)
+- Mode: --sensitive
+
+**Bowtie2 Pipeline** (Optional alternative):
+- bowtie2: default settings (~95% identity typical, DNA space)
 - No explicit coverage filter (can add with bedtools)
 
-**Solution**: Document genes detected by each method and investigate discrepancies
+**Solution**: DIAMOND parameters now match biogpu for fair comparison
 
 ### 2. Read Counting Differences
 
@@ -102,10 +107,11 @@ See `docs/TIMING_METRICS.md` for full documentation.
 
 ### 3. Multi-mapping Reads
 
-**BioGPU**: How are multi-mapping reads handled?
-**bowtie2 + htseq-count**: Default behavior needs to match
+**BioGPU**: Likely best hit per read
+**DIAMOND**: Top 1 hit per read (default mode)
+**bowtie2 + htseq-count** (optional): Default union mode
 
-**Solution**: Check both pipelines' handling of multi-mappers
+**Solution**: DIAMOND and biogpu should have similar multi-mapping behavior (both use best/top hit)
 
 ### 4. GFF3 Coordinate System
 
@@ -158,25 +164,39 @@ Correlation > 0.90 for genes detected by both methods
 
 ## Next Steps (In Order)
 
-1. ☐ **Clarify RPM calculation** (CRITICAL!)
-2. ☐ Create conda environment
-3. ☐ Run database setup script
-4. ☐ Select 10-20 test samples
-5. ☐ Extract biogpu results for test samples
-6. ☐ Create traditional pipeline script (with correct RPM calculation!)
-7. ☐ Run traditional pipeline
-8. ☐ Compare results
-9. ☐ Generate figures and report
-10. ☐ Add to reviewer response
+1. ☑ **Switched to DIAMOND** for fair comparison (translated search matching biogpu)
+2. ☑ Create conda environment
+3. ☑ Run database setup script
+4. ☑ Select test samples (50 samples selected)
+5. ☑ Create DIAMOND pipeline script with timing
+6. ☑ Create biogpu timing script
+7. ☐ **Run DIAMOND pipeline** (3-4 hours for 50 samples)
+8. ☐ **Run biogpu pipeline** with timing (4-8 hours for 50 samples)
+9. ☐ **Compare results** (correlation, gene overlap)
+10. ☐ **Generate figures and report**
+11. ☐ **Add to reviewer response**
 
 ---
 
 ## Questions to Resolve
 
-- [ ] Is RPM per million reads or per million read pairs?
-- [ ] How does biogpu handle multi-mapping reads?
+- [ ] Is RPM per million reads or per million read pairs? (Still need to verify)
+- [x] Should we use DIAMOND or bowtie2? → **DIAMOND (translated search matching biogpu)**
+- [x] Should we filter by coverage in DIAMOND pipeline? → **Yes, 50% (matching biogpu)**
+- [x] What identity threshold for DIAMOND? → **85% (matching biogpu)**
 - [ ] How does biogpu count paired-end reads (separately or as pairs)?
-- [ ] Should we filter by coverage in traditional pipeline?
-- [ ] What htseq-count mode should we use?
 
 **Document all decisions for reproducibility!**
+
+## Key Decision: Why DIAMOND?
+
+**Original Problem**: Bowtie2 uses nucleotide alignment while biogpu uses translated search (protein space)
+- This makes comparison unfair - different search spaces detect different genes
+- Nucleotide alignment requires ~95% identity; protein alignment can detect divergent homologs at 85%
+
+**Solution**: Use DIAMOND blastx for traditional pipeline
+- DIAMOND performs translated search (6-frame translation) just like biogpu
+- Same parameters: 85% identity, 50% coverage
+- Same search space (protein)
+- Fair, apples-to-apples comparison
+- Both methods can detect divergent resistance genes

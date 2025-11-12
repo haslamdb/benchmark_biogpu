@@ -42,8 +42,9 @@ conda activate benchmark_biogpu
 ```
 
 **Tools included**:
-- bowtie2 (alignment)
-- htseq-count (read counting - same as your existing scripts)
+- DIAMOND (translated search - primary method matching biogpu)
+- bowtie2 (nucleotide alignment - optional alternative)
+- htseq-count (read counting for bowtie2 pipeline)
 - samtools (SAM/BAM manipulation)
 - Python with pandas, numpy, scipy, matplotlib, seaborn
 - bedtools, parallel, and other utilities
@@ -51,19 +52,23 @@ conda activate benchmark_biogpu
 ## Step 2: Setup Databases (10-15 minutes)
 
 This script will:
-1. Link biogpu AMR+stress databases (14,280 genes)
-2. Copy DNA FASTA for traditional alignment
-3. Create GFF3 annotation file for htseq-count
-4. Build bowtie2 index
+1. Link biogpu AMR+stress databases (14,280 DNA genes, 17,099 protein genes)
+2. Copy DNA FASTA for bowtie2 pipeline (optional)
+3. Copy protein FASTA for DIAMOND pipeline (primary method)
+4. Create GFF3 annotation file for htseq-count (bowtie2 pipeline)
+5. Build DIAMOND index (.dmnd file)
+6. Build bowtie2 index (optional)
 
 ```bash
 ./scripts/01_setup_databases.sh
 ```
 
 **What it creates**:
-- `databases/traditional/amr_stress_dna.fasta` - DNA sequences (16 MB)
-- `databases/traditional/amr_stress_genes.gff3` - Annotations for htseq-count
-- `databases/traditional/amr_stress_bt2.*.bt2` - Bowtie2 index files
+- `databases/traditional/amr_stress_protein.fasta` - Protein sequences for DIAMOND
+- `databases/traditional/amr_stress_protein.dmnd` - DIAMOND index
+- `databases/traditional/amr_stress_dna.fasta` - DNA sequences for bowtie2 (optional)
+- `databases/traditional/amr_stress_genes.gff3` - Annotations for htseq-count (bowtie2)
+- `databases/traditional/amr_stress_bt2.*.bt2` - Bowtie2 index files (optional)
 
 **Log file**: Check `logs/database_setup_YYYYMMDD_HHMMSS.log` for details
 
@@ -75,14 +80,21 @@ Now you're ready to:
    - Stratified by body site, location, timepoint
    - Include varying AMR burden levels
 
-2. **Adapt your bowtie2 + htseq-count workflow**
-   - We found your existing scripts in `/home/david/projects/ShellScripts/`
-   - They use: `bowtie2` → `htseq-count` → `bedtools coverage`
-   - Need to adapt for our test samples and new database
+2. **Run DIAMOND pipeline** (primary method)
+   - Script: `scripts/02_run_diamond_pipeline.sh`
+   - Uses DIAMOND blastx (translated search matching biogpu)
+   - Same parameters: 85% identity, 50% coverage
+   - Single sample: `./scripts/02_run_diamond_pipeline.sh --sample NAME --r1 R1.fq.gz --r2 R2.fq.gz`
+   - Batch: `./scripts/03_batch_traditional_pipeline.sh`
 
-3. **Run both pipelines**
-   - Extract biogpu results for test samples
-   - Run traditional pipeline on same samples
+3. **Run biogpu pipeline** with timing
+   - Script: `scripts/04_run_biogpu_with_timing.sh`
+   - Single sample: `./scripts/04_run_biogpu_with_timing.sh --sample NAME --r1 R1.fq.gz --r2 R2.fq.gz --gpu-id 0`
+   - Batch: `./scripts/05_batch_biogpu_with_timing.sh --gpu-id 0`
+
+4. **(Optional) Run bowtie2 pipeline** for nucleotide comparison
+   - Uses bowtie2 → htseq-count → bedtools coverage
+   - Script: `scripts/02_run_traditional_pipeline.sh`
 
 4. **Compare results**
    - Correlation analysis
@@ -127,11 +139,18 @@ Example:
 - **Sensitivity**: Detects divergent sequences
 - **Already run**: Results in `/fastpool/analysis/nicu_amr_stress/`
 
-### Traditional Pipeline
+### Traditional Pipeline (DIAMOND - Primary)
+- **Method**: Translated search with DIAMOND blastx (matching biogpu's protein space)
+- **Parameters**: 85% identity, 50% coverage (matching biogpu)
+- **Mode**: --sensitive
+- **To run**: `./scripts/02_run_diamond_pipeline.sh` or batch with `03_batch_traditional_pipeline.sh`
+
+### Alternative: Bowtie2 Pipeline (Optional)
 - **Method**: Nucleotide alignment with bowtie2
 - **Parameters**: Default bowtie2 settings
-- **Counting**: htseq-count (same as your existing workflow)
-- **To run**: On same samples as biogpu
+- **Counting**: htseq-count
+- **To run**: `./scripts/02_run_traditional_pipeline.sh`
+- **Note**: Nucleotide-only alignment, less sensitive than translated search
 
 ### What We Expect
 - **High correlation** for conserved genes (r > 0.90)

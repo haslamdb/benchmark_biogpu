@@ -1,0 +1,64 @@
+# Benchmark BioGPU - Git Ignore File
+# Exclude large analysis output files, keep scripts and documentation
+
+# Analysis Results (LARGE - don't commit)
+results/
+logs/
+*.log
+
+# Data Files
+data/*.csv
+!data/.gitkeep
+
+# Database Files (LARGE)
+databases/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+nohup.out
+diamond_all_output.log
+
+# Compressed files (if any)
+*.tar.gz
+*.zip
+*.bz2
+
+# Keep these files (override patterns above)
+!.gitkeep
+!README.md
+!*.md

@@ -24,6 +24,7 @@ AMR_DB_PROTEIN="${BIOGPU_DIR}/data/amr_stress_combined_db/protein.fasta"
 AMR_PROTEIN_DB="${BIOGPU_DIR}/data/amr_stress_combined_protein_db"
 FQ_DB_NUC="${BIOGPU_DIR}/data/integrated_clean_db/nucleotide"
 FQ_DB_PROTEIN="${BIOGPU_DIR}/data/integrated_clean_db/protein"
+FQ_DB_JSON="${BIOGPU_DIR}/data/integrated_clean_db/resistance/resistance_db.json"
 
 # Parameters (matching original pipeline)
 MIN_IDENTITY="0.85"
@@ -219,6 +220,7 @@ if [[ "${USE_NVPROF}" == true ]]; then
         "${FQ_EXE}" \
             "${FQ_DB_NUC}" \
             "${FQ_DB_PROTEIN}" \
+            --fq-db-json "${FQ_DB_JSON}" \
             --csv "${TMP_CSV}" \
             --no-bloom \
             --output-dir "${SAMPLE_DIR}" \
@@ -228,6 +230,7 @@ else
         "${FQ_EXE}" \
             "${FQ_DB_NUC}" \
             "${FQ_DB_PROTEIN}" \
+            --fq-db-json "${FQ_DB_JSON}" \
             --csv "${TMP_CSV}" \
             --no-bloom \
             --output-dir "${SAMPLE_DIR}" \

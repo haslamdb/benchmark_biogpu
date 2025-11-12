@@ -19,11 +19,15 @@ Compare the custom GPU-accelerated biogpu pipeline (translated search) against t
 - **Output**: Gene-level abundance in RPM (reads per million)
 
 ### Traditional Pipeline (Reference Method)
-- **Method**: Nucleotide alignment + feature counting
+- **Method**: Translated search using DIAMOND blastx (matching biogpu's protein-space search)
 - **Tools**:
-  - bwa-mem OR bowtie2 (for read alignment)
-  - featureCounts OR custom counting script (for quantification)
-- **Databases**: Same reference sequences converted to nucleotide-only format
+  - DIAMOND blastx (primary method - translated search)
+  - bowtie2 + htseq-count (alternative - nucleotide alignment, retained for comparison)
+- **Databases**: Same reference sequences (protein for DIAMOND, DNA for bowtie2)
+- **Parameters** (DIAMOND):
+  - Min identity: 0.85 (85% - matching biogpu)
+  - Min coverage: 0.50 (50% - matching biogpu)
+  - Mode: --sensitive
 - **Output**: Gene-level read counts normalized to RPM
 
 ## Directory Structure
@@ -38,7 +42,7 @@ benchmark_biogpu/
 ├── logs/             # Processing logs
 ├── databases/        # Prepared reference databases
 │   ├── biogpu/      # Original biogpu format
-│   └── traditional/ # BWA/bowtie2 indexed references
+│   └── traditional/ # DIAMOND (.dmnd) and bowtie2 indexed references
 ├── docs/             # Documentation and analysis reports
 └── README.md
 
@@ -48,15 +52,16 @@ benchmark_biogpu/
 
 ### Phase 1: Setup
 1. ✓ Create directory structure
-2. ⃞ Identify test samples (subset of NICU data for speed)
-3. ⃞ Link/copy biogpu reference databases
-4. ⃞ Prepare traditional alignment databases (index with bwa/bowtie2)
-5. ⃞ Set up conda/mamba environment with required tools
+2. ✓ Identify test samples (50 randomly selected NICU samples)
+3. ✓ Link/copy biogpu reference databases
+4. ✓ Prepare traditional alignment databases (DIAMOND .dmnd index and bowtie2 index)
+5. ✓ Set up conda/mamba environment with required tools
 
 ### Phase 2: Run Pipelines
-1. ⃞ Extract biogpu results for test samples (already processed)
-2. ⃞ Run traditional alignment pipeline on same samples
-3. ⃞ Normalize both outputs to same scale (RPM)
+1. Run DIAMOND pipeline on test samples (translated search matching biogpu)
+2. Run biogpu pipeline with timing instrumentation
+3. (Optional) Run bowtie2 pipeline for nucleotide-space comparison
+4. Both pipelines output normalized abundance (RPM, TPM, coverage)
 
 ### Phase 3: Comparison
 1. ⃞ Compare gene detection sensitivity (genes detected by each method)
@@ -74,15 +79,21 @@ benchmark_biogpu/
 
 ## Test Dataset
 
-TBD - Will use subset of NICU samples (e.g., 10-20 samples representing different body sites and timepoints)
+50 randomly selected NICU samples (see `data/test_samples.csv`):
+- 28 UCMC samples (56%)
+- 22 ZCH samples (44%)
+- Stratified by body site, timepoint, and location
+- All FASTQ files verified to exist at `/bulkpool/sequence_data/mss_data/`
 
 ## Environment Setup
 
 Tools needed:
-- bwa-mem (or bowtie2)
-- samtools
-- featureCounts (from Subread package) OR bedtools
-- Python with pandas, numpy, scipy, matplotlib, seaborn
+- DIAMOND >=2.0.0 (primary tool - translated search)
+- bowtie2 >=2.4.5 (optional - nucleotide alignment)
+- samtools >=1.15
+- htseq (for read counting with bowtie2)
+- bedtools >=2.30 (for coverage analysis)
+- Python >=3.9 with pandas, numpy, scipy, matplotlib, seaborn
 
 ## Key Questions to Answer
 

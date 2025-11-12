@@ -77,6 +77,15 @@ while IFS=, read -r sample_name r1_path r2_path; do
     log "Processing sample ${CURRENT}/${TOTAL_SAMPLES}: ${sample_name}"
     log "========================================="
 
+    # Check if sample is already completed
+    SAMPLE_STATS="${BENCHMARK_DIR}/results/biogpu/${sample_name}/${sample_name}_stats.txt"
+    if [[ -f "${SAMPLE_STATS}" ]]; then
+        log "⊙ Sample ${sample_name} already completed (skipping)"
+        SUCCESS=$((SUCCESS + 1))
+        log ""
+        continue
+    fi
+
     # Build command
     CMD="${BENCHMARK_DIR}/scripts/04_run_biogpu_with_timing.sh \
         --sample \"${sample_name}\" \
