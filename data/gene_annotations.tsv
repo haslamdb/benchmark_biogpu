@@ -1,0 +1,352 @@
+gene_name	gene_family	drug_class
+MerP_Gneg	MerP_Gneg	MERCURY
+aac(3)-Ih	aac(3)-Ih	AMINOGLYCOSIDE
+aac(6')-Iaa	aac(6')_Salmo	
+aac(6')-Iy	aac(6')_Salmo	
+aadA1	aadA1	AMINOGLYCOSIDE
+aafC	aafC	
+abaF	abaF	FOSFOMYCIN
+acrF	acrF	EFFLUX
+adeC	adeC	EFFLUX
+adeD	adeD	EFFLUX
+adeE	adeE	EFFLUX
+agg3A	agg3A	
+agg3C	agg3C	
+aggC	aggC	
+aggD	aggD	
+ail	ail	
+air	air	
+alo	alo	
+alpha-1	alpha-1	INTIMIN
+alpha-2	alpha-2	INTIMIN
+alpha-5	alpha-5	INTIMIN
+amvA	amvA	EFFLUX
+ariR	ariR	
+arsA	arsA	ARSENIC
+arsB_R773	arsB_R773	ARSENIC
+arsB_pI258	arsB_pI258	ARSENIC
+arsB_pYV	arsB_pYV	ARSENIC
+arsC_gluta	arsC_gluta	ARSENIC
+arsC_thio	arsC_thio	ARSENIC
+arsD	arsD	ARSENIC
+arsH	arsH	ARSENIC
+arsN2	arsN2	ARSENIC
+arsP	arsP	ARSENIC
+arsR_R46	arsR_R46	ARSENIC
+arsR_pI258	arsR_pI258	ARSENIC
+arsR_pKW301	arsR_pKW301	ARSENIC
+arsR_pSX267	arsR_pSX267	ARSENIC
+arsR_pYV	arsR_pYV	ARSENIC
+aut	aut	
+bepC	bepC	EFFLUX
+bepD	bepD	EFFLUX
+bepE	bepE	EFFLUX
+bepF	bepF	EFFLUX
+bepG	bepG	EFFLUX
+beta-2	beta-2	INTIMIN
+beta-4	beta-4	INTIMIN
+bimA_Bm	bimA_Bm	
+bin_CdtA	bin_CdtA	
+bind_CopB	bind_CopB	COPPER
+blaACT-27	blaACT	BETA-LACTAM
+blaACT-63	blaACT	
+blaCTX-M-167	blaCTX-M	BETA-LACTAM
+blaCTX-M-21	blaCTX-M	BETA-LACTAM
+blaCTX-M-26	blaCTX-M	BETA-LACTAM
+blaCTX-M-34	blaCTX-M	BETA-LACTAM
+blaCTX-M-81	blaCTX-M	BETA-LACTAM
+blaEC	blaEC	BETA-LACTAM
+blaEC-5	blaEC	BETA-LACTAM
+blaEC-8	blaEC	BETA-LACTAM
+blaLEN-111	blaLEN	
+bmaE	bmaE	
+bonA	bonA	
+bont_A3	bont_A3	
+bont_A5	bont_A5	
+bont_B1	bont_B1	
+bont_B3	bont_B3	
+bont_B4	bont_B4	
+bont_B5	bont_B5	
+bont_B7	bont_B7	
+bont_D	bont_D	
+bont_DC	bont_DC	
+bont_E2	bont_E2	
+bont_E3	bont_E3	
+bont_E7	bont_E7	
+bont_E8	bont_E8	
+bont_F1	bont_F1	
+bont_F3	bont_F3	
+bont_F4	bont_F4	
+bont_F5	bont_F5	
+bont_F6	bont_F6	
+bont_F7	bont_F7	
+cadC_Lm	cadC_Lm	CADMIUM
+cadC_Sa	cadC_Sa	CADMIUM/LEAD/ZINC
+cadR	cadR	CADMIUM
+capA	capA	
+capB	capB	
+capC	capC	
+capD	capD	
+cerA	cerA	
+cesB	cesB	
+cesC	cesC	
+cesD	cesD	
+cfaC	cfaC	
+chrA	chrA	CHROMATE
+chrR_I	chrR_I	CHROMATE
+cif	cif	
+clpL	clpL	
+clpX	clpX	STRESS
+cnf1	cnf1	
+cnrA	cnrA	NICKEL
+cnrC	cnrC	NICKEL
+cnrT	cnrT	NICKEL
+copA_Ehir	copA_Ehir	COPPER
+copB_Ehir	copB_Ehir	COPPER/SILVER
+copC_Psyr	copC_Psyr	COPPER
+copR	copR	COPPER
+copS	copS	COPPER
+cpb2	cpb2	
+cpe	cpe	
+cph	cph	TUBERACTINOMYCIN
+cssA	cssA	
+csuC	csuC	
+cswA	cswA	
+ctxA	ctxA	
+cueA	cueA	COPPER
+cvaB	cvaB	
+cytK1	cytK1	
+cytK2	cytK2	
+dpsA	dpsA	
+eat(A)	eat(A)	PLEUROMUTILIN
+eatA	eatA	
+efa1	efa1	
+ehxA	ehxA	
+eilA	eilA	
+emhA	emhA	EFFLUX
+emhB	emhB	EFFLUX
+emhC	emhC	EFFLUX
+emrD	emrD	EFFLUX
+emrD3	emrD3	EFFLUX
+entFM	entFM	
+epeA	epeA	
+epsilon-1	epsilon-1	INTIMIN
+epsilon-2	epsilon-2	INTIMIN
+epsilon-6	epsilon-6	INTIMIN
+epsilon-7	epsilon-7	INTIMIN
+epsilon-8	epsilon-8	INTIMIN
+erm(C)	erm(C)	LINCOSAMIDE/MACROLIDE/STREPTOGR
+erm(G)	erm(G)	LINCOSAMIDE/MACROLIDE/STREPTOGR
+espA	espA	
+espB	espB	
+espC	espC	
+espF	espF	
+espJ	espJ	
+espP	espP	
+espX1	espX1	
+eta	eta	
+etb	etb	
+f17a	f17a	
+f17g	f17g	
+faeG	faeG	
+farB	farB	EFFLUX
+fdeC	fdeC	
+fedF	fedF	
+fepA	fepA	STRESS
+focG	focG	
+gamma-1	gamma-1	INTIMIN
+gamma-3	gamma-3	INTIMIN
+gamma-5	gamma-5	INTIMIN
+gamma-6	gamma-6	INTIMIN
+golS	golS	GOLD
+golT	golT	COPPER/GOLD
+gyrA	gyrA	
+hblB	hblB	
+hblC	hblC	
+hblD	hblD	
+hld	hld	
+hlyE	hlyE	
+hlyII	hlyII	
+hmrM	hmrM	EFFLUX
+ibeA	ibeA	
+iha	iha	
+inhA1	inhA1	
+inhA2	inhA2	
+inlC2	inlC2	
+inlD	inlD	
+inlF	inlF	
+inlG	inlG	
+inlH	inlH	
+inlI	inlI	
+inlK	inlK	
+inl_lmo0514	inl_lmo0514	
+inl_lmo0610	inl_lmo0610	
+iota-1	iota-1	INTIMIN
+ipaD	ipaD	
+ipaH1.4	ipaH1.4	
+ipaH2.5	ipaH2.5	
+ipaH4.5	ipaH4.5	
+ipaH7.8	ipaH7.8	
+ipaHa	ipaHa	
+ipaHd	ipaHd	
+ireA	ireA	
+iroD	iroD	
+iroE	iroE	
+iroN	iroN	
+iss	iss	
+iucB	iucB	
+iucC	iucC	
+iucD	iucD	
+iutA	iutA	
+kdeA	kdeA	EFFLUX
+klaB	klaB	TELLURIUM
+klaC	klaC	TELLURIUM
+lambda-2	lambda-2	INTIMIN
+lef	lef	
+lmrC_abcf	lmrC_abcf	FOSFOMYCIN
+lmrS	lmrS	MACROLIDE/PHENICOL
+lpfA-O113	lpfA-O113	
+lpfA1	lpfA1	
+mchF	mchF	
+mco	mco	COPPER
+mdsA	mdsA	EFFLUX
+mdsB	mdsB	EFFLUX
+mdtM	mdtM	EFFLUX
+mepA	mepA	TETRACYCLINE
+merA	merA	MERCURY
+merB	merB	MERCURY
+merB1	merB1	MERCURY
+merC	merC	MERCURY
+merD	merD	MERCURY
+merE	merE	MERCURY
+merR_Bc1	merR_Bc1	MERCURY
+merR_Bc2	merR_Bc2	MERCURY
+merR_Ps	merR_Ps	MERCURY
+merT	merT	MERCURY
+merT_RC607	merT_RC607	MERCURY
+merT_pI258	merT_pI258	MERCURY
+mexA	mexA	EFFLUX
+mexE	mexE	EFFLUX
+mexX	mexX	EFFLUX
+mrdH	mrdH	COPPER/NICKEL
+mreA	mreA	
+mtrA_Ngon	mtrA_Ngon	EFFLUX
+mtrC	mtrC	EFFLUX
+mtrF	mtrF	EFFLUX
+mtrR	mtrR	EFFLUX
+multi_CopA	multi_CopA	COPPER
+ncrA	ncrA	NICKEL
+ncrB	ncrB	NICKEL
+ncrC	ncrC	COPPER/NICKEL
+ncrY	ncrY	NICKEL
+netB	netB	
+nfaE	nfaE	
+nheA	nheA	
+nheB	nheB	
+nheC	nheC	
+nirB	nirB	NICKEL
+nleA	nleA	
+nleC	nleC	
+norM-Burk	norM-Burk	EFFLUX
+nreB	nreB	NICKEL
+pagA	pagA	
+papG-II	papG-II	
+perA	perA	
+pet	pet	
+pfoA	pfoA	
+pic_auto	pic_auto	
+plcA	plcA	
+plcR	plcR	
+pld	pld	
+pmrA	pmrA	QUINOLONE
+qacR	qacR	QUATERNARY_AMMONIUM
+ranA	ranA	EFFLUX
+ranB	ranB	EFFLUX
+rho-1	rho-1	INTIMIN
+rho-3	rho-3	INTIMIN
+rpeA	rpeA	
+saa	saa	
+sab	sab	
+sat_auto	sat_auto	
+scn	scn	
+sdeA	sdeA	EFFLUX
+sdeB	sdeB	EFFLUX
+seb	seb	
+sec2	sec2	
+sed	sed	
+see	see	
+seh	seh	
+sej	sej	
+sek	sek	
+sel31	sel31	
+selV	selV	
+selX	selX	
+senB	senB	
+sep	sep	
+sepA	sepA	
+sfaS	sfaS	
+sigA	sigA	
+silA	silA	COPPER/SILVER
+silB	silB	COPPER/SILVER
+silC	silC	COPPER/SILVER
+silE	silE	SILVER
+silP	silP	SILVER
+sinH	sinH	
+sodC1	sodC1	
+soxS	soxS	STRESS
+sph	sph	
+splA	splA	
+splB	splB	
+splE	splE	
+spvD	spvD	
+srpA	srpA	EFFLUX
+srpB	srpB	EFFLUX
+srpC	srpC	EFFLUX
+srpR	srpR	EFFLUX
+srpS	srpS	EFFLUX
+sslE	sslE	
+stxA1a	stxA1a	STX1
+stxA2_acd	stxA2_acd	STX2
+stxA2b	stxA2b	STX2
+stxA2c	stxA2c	STX2
+stxA2e	stxA2e	STX2
+subA	subA	
+tbtA	tbtA	EFFLUX
+tbtB	tbtB	EFFLUX
+tbtM	tbtM	EFFLUX
+tbtR	tbtR	EFFLUX
+tcaC	tcaC	
+tcbA	tcbA	
+tccC	tccC	
+tccP	tccP	
+tccP2	tccP2	
+tcrB	tcrB	COPPER
+terB	terB	TELLURIUM
+terC	terC	TELLURIUM
+terD	terD	TELLURIUM
+terE	terE	TELLURIUM
+terW	terW	TELLURIUM
+terZ	terZ	TELLURIUM
+tir	tir	
+tox	tox	
+toxB	toxB	
+tsh	tsh	
+tst	tst	
+ttgA	ttgA	EFFLUX
+ttgB	ttgB	EFFLUX
+ttgD	ttgD	EFFLUX
+ttgE	ttgE	EFFLUX
+ttgR	ttgR	EFFLUX
+ttgT	ttgT	EFFLUX
+vac_auto	vac_auto	
+vat(E)	vat(E)	STREPTOGRAMIN
+vip	vip	
+virF	virF	
+virF_Yersin	virF_Yersin	
+ybtQ	ybtQ	
+yfeA	yfeA	
+yfeB	yfeB	
+yfeD	yfeD	
+ymoA	ymoA	
+yopB	yopB	
+yopJ_gen	yopJ_gen	

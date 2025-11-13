@@ -1,0 +1,8 @@
+
+--- Profiling Report ---
+Batch Reading: 141.526ms (avg of 210 calls)
+File I/O: 562592ms (avg of 1 calls)
+Pipeline Processing: 2077.78ms (avg of 209 calls)
+Report Generation: 14.5758ms (avg of 1 calls)
+------------------------
+

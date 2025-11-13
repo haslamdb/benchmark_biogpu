@@ -8,6 +8,8 @@ logs/
 
 # Data Files
 data/*.csv
+data/diamond_amr_combined.tsv  # Large combined file (27M)
+results/**/*.tsv  # Analysis output files
 !data/.gitkeep
 
 # Database Files (LARGE)
